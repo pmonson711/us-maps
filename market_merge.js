@@ -35,11 +35,9 @@ var turf = require("turf"),
         features: _.flatten(_.pluck(polygons, "features"))
     };
     console.log(f);
-    var merged = turf.merge(f);
+    var combine = turf.combine(f);
     console.log(' - merged ' + name);
-    merged.properties.GEOID10 = market;
-    merged.properties.ZCTA5CE10 = market;
-    fs.writeFileSync(base+'/'+market+'.json', JSON.stringify(merged));
+    fs.writeFileSync(base+'/'+market, JSON.stringify(combine));
 
     console.log(' - wrote ' + name);
     console.log('');
