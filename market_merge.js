@@ -38,7 +38,7 @@ var turf = require("turf"),
     var combine = turf.combine(f);
     console.log(' - merged ' + name);
     fs.writeFileSync(base+'/'+market + ".geojson", JSON.stringify(combine));
-    var merged = turf.merge(combine);
+    var merged = turf.merge(f);
     fs.writeFileSync(base+'/'+market + "_merged.geojson", JSON.stringify(merged));
 
     console.log(' - wrote ' + name);
