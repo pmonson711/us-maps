@@ -17,7 +17,7 @@ var turf = require("turf"),
             name = "0" + name;
         }
         console.log('Testing ' + name);
-        if (fs.existsSync(base+'/'+name+'_merged.geojson')) {
+        if (fs.existsSync(base+'/'+name+'.geojson')) {
             console.log(' - found file for '+base + '/' + name + '.geojson');
             var polygon;
             try {
