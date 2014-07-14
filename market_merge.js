@@ -17,27 +17,29 @@ var turf = require("turf"),
             name = "0" + name;
         }
         console.log('Testing ' + name);
-        if (fs.existsSync(base+'/'+name+'.geojson')) {
+        if (fs.existsSync(base+'/'+name+'_merged.geojson')) {
             console.log(' - found file for '+base + '/' + name + '.geojson');
-            var g = fs.readFileSync(base+'/'+name+'.geojson');
             var polygon;
             try {
-                polygon = JSON.parse(g);
+                var zips = JSON.parse(fs.readFileSync(base+'/'+name+'.geojson'));
+                polygon = zips.features;
                 polygons.push(polygon);
             } catch(e) {
-                console.log("BAD JSON: " + name);
+                console.log("BAD JSON: " + name + ": " + e.message);
             }
         }
     }
 
     var f = {
         type: "FeatureCollection",
-        features: _.flatten(_.pluck(polygons, "features"))
+        features: _.flatten(polygons)
     };
     console.log(f);
     var combine = turf.combine(f);
     console.log(' - merged ' + name);
-    fs.writeFileSync(base+'/'+market, JSON.stringify(combine));
+    fs.writeFileSync(base+'/'+market + ".geojson", JSON.stringify(combine));
+    var merged = turf.merge(combine);
+    fs.writeFileSync(base+'/'+market + "_merged.geojson", JSON.stringify(merged));
 
     console.log(' - wrote ' + name);
     console.log('');
