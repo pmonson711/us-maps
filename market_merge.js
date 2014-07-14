@@ -34,11 +34,9 @@ var turf = require("turf"),
         type: "FeatureCollection",
         features: _.flatten(polygons)
     };
-    console.log(f);
     var combine = turf.combine(f);
     console.log(' - merged ' + market);
     fs.writeFileSync(base+'/'+market + "_base.geojson", JSON.stringify(f));
-    fs.writeFileSync(base+'/'+market + ".geojson", JSON.stringify(combine));
     var merged = turf.merge(f);
     fs.writeFileSync(base+'/'+market + "_merged.geojson", JSON.stringify(merged));
 
